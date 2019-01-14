@@ -1,0 +1,49 @@
+{
+  "name": "zonely.eu",
+  "version": "1.0.0",
+  "description": "World time zone converter",
+  "main": "index.js",
+  "homepage": "https://sebastianrosik.github.io/zonely/",
+  "scripts": {
+    "test": "jest",
+    "build": "webpack --mode production",
+    "develop": "webpack-dev-server --open --mode development",
+    "start": "npm run develop",
+    "deploy": "gh-pages -d dist",
+    "predeploy": "npm run build",
+    "release": "standard-version"
+  },
+  "author": "Sebastian Rosik <sebastian.rosik@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/core": "^7.2.2",
+    "@babel/preset-env": "^7.2.3",
+    "@babel/preset-react": "^7.0.0",
+    "babel-loader": "^8.0.5",
+    "gh-pages": "^2.0.1",
+    "html-loader": "^0.5.5",
+    "html-webpack-plugin": "^3.2.0",
+    "husky": "^1.3.1",
+    "lint-staged": "^8.1.0",
+    "prettier": "^1.15.3",
+    "react": "^16.7.0",
+    "react-dom": "^16.7.0",
+    "webpack": "^4.28.4",
+    "webpack-cli": "^3.2.1",
+    "webpack-dev-server": "^3.1.14"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "src/**/*.{js,jsx,ts,tsx,json,css,scss,md}": [
+      "prettier --single-quote --write",
+      "git add"
+    ]
+  },
+  "dependencies": {
+    "standard-version": "^4.4.0"
+  }
+}
