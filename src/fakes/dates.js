@@ -1,0 +1,4 @@
+export const APP_START_DATE = '2019-01-14T20:20:16.933Z';
+export const MOCK_DATE_0 = '2019-01-14T20:20:16.933Z';
+export const MOCK_DATE_1 = '2019-01-14T20:20:16.933Z';
+export const MOCK_DATE_2 = '2019-01-14T20:20:16.933Z';
