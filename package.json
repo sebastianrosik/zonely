@@ -18,10 +18,12 @@
   "license": "MIT",
   "devDependencies": {
     "@babel/core": "^7.2.2",
+    "@babel/plugin-proposal-class-properties": "^7.2.3",
     "@babel/preset-env": "^7.2.3",
     "@babel/preset-react": "^7.0.0",
     "babel-core": "^7.0.0-bridge.0",
     "babel-loader": "^8.0.5",
+    "css-loader": "^2.1.0",
     "enzyme": "^3.8.0",
     "enzyme-adapter-react-16": "^1.7.1",
     "gh-pages": "^2.0.1",
@@ -37,6 +39,7 @@
     "react-redux": "^6.0.0",
     "redux": "^4.0.1",
     "redux-actions": "^2.6.4",
+    "style-loader": "^0.23.1",
     "webpack": "^4.28.4",
     "webpack-cli": "^3.2.1",
     "webpack-dev-server": "^3.1.14"
@@ -53,10 +56,16 @@
     ]
   },
   "dependencies": {
+    "classnames": "^2.2.6",
     "moment-timezone": "^0.5.23",
     "standard-version": "^4.4.0"
   },
   "jest": {
-    "setupFiles": ["./setupTest.js"]
+    "setupFiles": [
+      "./setupTest.js"
+    ],
+    "moduleNameMapper": {
+      "\\.css$": "<rootDir>/__mocks__/styleMock.js"
+    }
   }
 }

@@ -2,28 +2,37 @@ import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 
 import List from '../../components/List';
+import Select from '../../components/Select';
+import { getAllTimeZoneNames } from '../../lib/timeZones';
+import { addTimeZone, removeTimeZone } from '../../actions/timeZones';
+
+const allTimeZones = getAllTimeZoneNames();
 
 export class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      timeZones: []
-    };
-  }
+  onAddTimeZone = name => {
+    this.props.addTimeZone(name);
+  };
+  onRemoveTimeZone = name => {
+    this.props.removeTimeZone(name);
+  };
   render() {
     return (
       <Fragment>
-        <List items={this.state.timeZones} />
+        <List items={this.props.myTimeZones} onRemove={this.onRemoveTimeZone} />
+        <Select items={allTimeZones} onSelect={this.onAddTimeZone} />
       </Fragment>
     );
   }
 }
 
 const mapStateToProps = state => ({
-  timeZones: state.timeZones
+  myTimeZones: state.timeZones
 });
 
-const mapDispatchToProps = dispatch => ({});
+const mapDispatchToProps = dispatch => ({
+  addTimeZone: name => dispatch(addTimeZone(name)),
+  removeTimeZone: name => dispatch(removeTimeZone(name))
+});
 
 const ConnectedApp = connect(
   mapStateToProps,
