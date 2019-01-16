@@ -3,16 +3,14 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames';
 
 import styles from './Select.css';
-
-const PLACEHOLDER = 'Select...';
+import { ADD_TIME_ZONE, SEARCH_TIME_ZONE } from '../../labels';
 
 export default class Select extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
       filter: '',
-      value: '',
-      open: false
+      value: ''
     };
   }
   getFilteredItems() {
@@ -21,48 +19,37 @@ export default class Select extends PureComponent {
     );
   }
   onOverlayClick = () => {
-    this.setState({
-      open: false
-    });
+    this.props.onClose();
   };
   onChange = event => {
     this.setState({
       filter: event.target.value
     });
   };
-  onBlur = () => {
-    this.setState({
-      open: false
-    });
-  };
-  onToggle = event => {
-    event.preventDefault();
-    this.setState(({ open }) => ({
-      open: !open
-    }));
-  };
   onSelect = (event, name) => {
     event.preventDefault();
     this.setState({
-      open: false,
       value: name,
       filter: ''
     });
     this.props.onSelect(name);
+    this.props.onClose();
   };
   renderListItem = name => {
     return (
-      <li
-        data-test="item"
-        key={name}
-        onClick={event => this.onSelect(event, name)}
-      >
-        {name}
+      <li data-test="item" key={name} className={styles.item}>
+        <button
+          className={styles.button}
+          data-test="button"
+          onClick={event => this.onSelect(event, name)}
+        >
+          {name}
+        </button>
       </li>
     );
   };
-  renderList() {
-    if (!this.state.open) {
+  render() {
+    if (!this.props.open) {
       return null;
     }
     return (
@@ -76,8 +63,10 @@ export default class Select extends PureComponent {
           <input
             data-test="input"
             type="search"
+            placeholder={SEARCH_TIME_ZONE}
             onChange={this.onChange}
-            onBlur={this.onBlur}
+            className={styles.input}
+            autoFocus
           />
         </form>
         <ul className={styles.list}>
@@ -86,27 +75,19 @@ export default class Select extends PureComponent {
       </Fragment>
     );
   }
-  render() {
-    return (
-      <div
-        data-test="select"
-        className={classnames(styles.select, this.state.open && styles.isOpen)}
-      >
-        <button data-test="button" onClick={this.onToggle}>
-          {this.state.value || PLACEHOLDER}
-        </button>
-        {this.renderList()}
-      </div>
-    );
-  }
 }
 
 Select.propTypes = {
+  open: PropTypes.bool,
   items: PropTypes.arrayOf(PropTypes.string),
-  onSelect: PropTypes.func
+  onSelect: PropTypes.func,
+  onClose: PropTypes.func,
+  className: PropTypes.string
 };
 
 Select.defaultProps = {
+  open: false,
   items: [],
-  onSelect: () => {}
+  onSelect: () => {},
+  onClose: () => {}
 };

@@ -1,0 +1,46 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 2em;
+  background: #111;
+  color: #fff;
+  font-family: 'Overpass Mono', monospace;
+}
+
+.app {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  max-width: 1000px;
+}
+
+.list {
+  flex-grow: 1;
+  width: 100%;
+  overflow: auto;
+  max-height: calc(100vh - 100px);
+}
+
+.select {
+  flex-grow: 0;
+  flex-shrink: 0;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.footer {
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+}

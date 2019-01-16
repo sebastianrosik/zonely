@@ -1,25 +1,25 @@
 import { handleActions } from 'redux-actions';
 import { addTimeZone, removeTimeZone } from '../actions/timeZones';
-import { getCurrentDateForTimeZone } from '../lib/timeZones';
+import { updateClock } from '../actions/clock';
+import TimeZone from '../lib/TimeZone';
 
 const defaultState = [];
 
-const createNewTimeZone = ({ name }) => ({
-  name,
-  date: getCurrentDateForTimeZone(name)
-});
+const timeZoneExists = (state, name) =>
+  state.find(timeZone => name === timeZone.name);
 
 export default handleActions(
   {
     [addTimeZone]: (state, { payload }) => {
-      if (state.find(({ name }) => name === payload.name)) {
+      if (timeZoneExists(state, payload)) {
         return state;
       }
-      return [...state, createNewTimeZone(payload)];
+      return [...state, new TimeZone(payload)];
     },
     [removeTimeZone]: (state, { payload }) => {
-      return state.filter(({ name }) => name !== payload.name);
-    }
+      return state.filter(({ name }) => name !== payload);
+    },
+    [updateClock]: state => state.map(({ name }) => new TimeZone(name))
   },
   defaultState
 );

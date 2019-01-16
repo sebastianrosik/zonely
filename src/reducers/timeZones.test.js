@@ -1,61 +1,67 @@
 import timeZonesReducer from './timeZones';
 import { addTimeZone, removeTimeZone } from '../actions/timeZones';
 import { EUROPE_WARSAW, AMERICA_NEWYORK } from '../fakes/timeZones';
-import { APP_START_DATE } from '../fakes/dates';
-import * as timeZones from '../lib/timeZones';
+import TimeZone from '../lib/TimeZone';
+import { updateClock } from '../actions/clock';
+
+jest.mock('../lib/TimeZone');
 
 describe('reducers/timeZones', () => {
   beforeEach(() => {
-    expect.assertions(1);
-    timeZones.getCurrentDateForTimeZone = jest.fn(
-      () => new Date(APP_START_DATE)
-    );
+    expect.hasAssertions();
+    TimeZone.mockClear();
   });
   it('Creates a new time zone', () => {
     const initialState = [];
     const action = addTimeZone(EUROPE_WARSAW);
     const state = timeZonesReducer(initialState, action);
-    expect(state).toEqual([
-      {
-        name: EUROPE_WARSAW,
-        date: new Date(APP_START_DATE)
-      }
-    ]);
+    expect(state[0]).toBeInstanceOf(TimeZone);
+    expect(TimeZone).toHaveBeenCalledWith(EUROPE_WARSAW);
   });
   it('Does not create a new time zone if it already exist', () => {
     const initialState = [
       {
-        name: EUROPE_WARSAW,
-        date: new Date(APP_START_DATE)
+        name: EUROPE_WARSAW
       }
     ];
     const action = addTimeZone(EUROPE_WARSAW);
     const state = timeZonesReducer(initialState, action);
     expect(state).toEqual([
       {
-        name: EUROPE_WARSAW,
-        date: new Date(APP_START_DATE)
+        name: EUROPE_WARSAW
       }
     ]);
   });
   it('Removes given time zone', () => {
     const initialState = [
       {
-        name: EUROPE_WARSAW,
-        date: new Date(APP_START_DATE)
+        name: EUROPE_WARSAW
       },
       {
-        name: AMERICA_NEWYORK,
-        date: new Date(APP_START_DATE)
+        name: AMERICA_NEWYORK
       }
     ];
     const action = removeTimeZone(EUROPE_WARSAW);
     const state = timeZonesReducer(initialState, action);
     expect(state).toEqual([
       {
-        name: AMERICA_NEWYORK,
-        date: new Date(APP_START_DATE)
+        name: AMERICA_NEWYORK
       }
     ]);
+  });
+  it('reacreates time zone instances when clock is updated', () => {
+    const initialState = [
+      {
+        name: EUROPE_WARSAW
+      },
+      {
+        name: AMERICA_NEWYORK
+      }
+    ];
+    const action = updateClock();
+    timeZonesReducer(initialState, action);
+    expect(TimeZone).toHaveBeenCalledTimes(initialState.length);
+    expect(TimeZone).toHaveBeenCalledWith(EUROPE_WARSAW);
+    expect(TimeZone).toHaveBeenCalledWith(AMERICA_NEWYORK);
   });
 });

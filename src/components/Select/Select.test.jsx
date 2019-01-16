@@ -16,7 +16,7 @@ describe('Select', () => {
     expect(wrapper.find('li')).toHaveLength(0);
   });
   it('render list when select is open', () => {
-    wrapper.setState({
+    wrapper.setProps({
       open: true
     });
     const items = wrapper.find('[data-test="item"]');
@@ -24,46 +24,38 @@ describe('Select', () => {
     expect(items.at(0).text()).toEqual(EUROPE_WARSAW);
     expect(items.at(1).text()).toEqual(AMERICA_NEWYORK);
   });
-  it('opens list on click', () => {
-    wrapper.find('[data-test="button"]').simulate('click', fakeEvent);
-    expect(wrapper.state('open')).toEqual(true);
-  });
-  it('closes list after clicking on overlay', () => {
-    wrapper.setState({
-      open: true
+  it('calls onClose list after clicking on overlay', () => {
+    const onCloseMock = jest.fn();
+    wrapper.setProps({
+      open: true,
+      onClose: onCloseMock
     });
     wrapper.find('[data-test="overlay"]').simulate('click', fakeEvent);
-    expect(wrapper.state('open')).toEqual(false);
+    expect(onCloseMock).toHaveBeenCalled();
   });
   it('overlay is not rendered when select is closed', () => {
-    wrapper.setState({
+    wrapper.setProps({
       open: false
     });
     expect(wrapper.contains('[data-test="overlay"]')).toEqual(false);
   });
-  it('closes list after selecting an item', () => {
-    wrapper.setState({
-      open: true
+  it('calls onClose list after selecting an item', () => {
+    const onCloseMock = jest.fn();
+    wrapper.setProps({
+      open: true,
+      onClose: onCloseMock
     });
     wrapper
-      .find('[data-test="item"]')
+      .find('[data-test="button"]')
       .at(0)
       .simulate('click', fakeEvent);
-    expect(wrapper.state('open')).toEqual(false);
-  });
-  it('closes list on blur', () => {
-    wrapper.setState({
-      open: true
-    });
-    wrapper
-      .find('[data-test="input"]')
-      .at(0)
-      .simulate('blur');
-    expect(wrapper.state('open')).toEqual(false);
+    expect(onCloseMock).toHaveBeenCalled();
   });
   it('filters list', () => {
+    wrapper.setProps({
+      open: true
+    });
     wrapper.setState({
-      open: true,
       filter: 'york'
     });
     const items = wrapper.find('[data-test="item"]');
@@ -72,7 +64,7 @@ describe('Select', () => {
   });
   it('updates filter with every character', () => {
     const expectedFilter = 'york';
-    wrapper.setState({
+    wrapper.setProps({
       open: true
     });
     wrapper.find('[data-test="input"]').simulate('change', {

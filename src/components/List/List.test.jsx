@@ -21,6 +21,6 @@ const fakeitems = [
 describe('List', () => {
   it('renders given items', () => {
     const wrapper = shallow(<List items={fakeitems} />);
-    expect(wrapper.find('li')).toHaveLength(3);
+    expect(wrapper.find('[data-test="item"]')).toHaveLength(3);
   });
 });

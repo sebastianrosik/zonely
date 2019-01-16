@@ -1,14 +1,4 @@
-import { createActions } from 'redux-actions';
-import { isTimeZoneValid, DEFAULT_TIME_ZONE } from '../lib/timeZones';
+import { createAction } from 'redux-actions';
 
-export const { addTimeZone, removeTimeZone } = createActions({
-  ADD_TIME_ZONE: (name = DEFAULT_TIME_ZONE) => {
-    if (!isTimeZoneValid(name)) {
-      throw new Error('Given time zone is invalid');
-    }
-    return {
-      name
-    };
-  },
-  REMOVE_TIME_ZONE: name => ({ name })
-});
+export const addTimeZone = createAction('ADD_TIME_ZONE');
+export const removeTimeZone = createAction('REMOVE_TIME_ZONE');
