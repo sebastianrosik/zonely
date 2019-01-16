@@ -10,11 +10,23 @@ export default class TimeZone {
     this.name = name;
     this._moment = moment().tz(name);
   }
+  static guessUsersTimeZone() {
+    return moment.tz.guess();
+  }
   static getNames() {
     return moment.tz.names();
   }
   static isValidName(name) {
     return moment.tz.zone(name) !== null;
+  }
+  static addLeadZero(number) {
+    return number < 10 ? `0${number}` : number.toString();
+  }
+  getHours() {
+    return TimeZone.addLeadZero(this._moment.hour());
+  }
+  getMinutes() {
+    return TimeZone.addLeadZero(this._moment.minute());
   }
   format() {
     return this._moment.format('HH:mm:ss');

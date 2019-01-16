@@ -1,7 +1,8 @@
 .list {
   list-style: none;
   margin: 0 auto;
-  padding: 0;
+  box-shadow: inset 0 2px 11px black;
+  background: #202020;
 }
 
 .item {
@@ -9,6 +10,25 @@
   padding: 10px 20px;
   display: flex;
   flex-direction: row;
+  text-shadow: 0px 2px 1px black;
+  align-items: center;
+  cursor: pointer;
+}
+
+.item:hover {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.item:active {
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.list .item:first-child {
+  padding-top: 30px;
+}
+
+.list .item:last-child {
+  padding-bottom: 30px;
 }
 
 .name {
@@ -16,23 +36,25 @@
   max-width: 400px;
   text-overflow: ellipsis;
   overflow: hidden;
+  padding-right: 50px;
   white-space: nowrap;
 }
 
 .date {
   flex-grow: 0;
+  font-size: 2rem;
 }
 
-.name,
-.date {
-  padding-right: 50px;
-}
-
-@media (max-width: 960px) {
+@media (max-width: 640px) {
   .item {
+    align-items: initial;
     flex-direction: column;
   }
   .name {
     font-size: 0.5rem;
+    padding: 15px 0 5px;
+  }
+  .date {
+    padding: 0;
   }
 }

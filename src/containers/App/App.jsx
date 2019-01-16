@@ -38,6 +38,7 @@ export class App extends Component {
     return (
       <div className={styles.app}>
         <section className={styles.content}>
+          <header className={styles.header}>TIMELY</header>
           <List
             className={styles.list}
             items={this.props.timeZones}

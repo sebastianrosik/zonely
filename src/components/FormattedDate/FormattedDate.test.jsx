@@ -12,10 +12,12 @@ describe('FormattedDate', () => {
   });
 
   it('renders date in proper format', () => {
+    const mockHours = '01';
+    const mockMinutes = '23';
     const mockedTimeZone = new TimeZone();
-    const mockedFormattedDate = '11:22:33';
-    mockedTimeZone.format.mockImplementation(() => mockedFormattedDate);
+    mockedTimeZone.getMinutes.mockImplementation(() => mockMinutes);
+    mockedTimeZone.getHours.mockImplementation(() => mockHours);
     const wrapper = shallow(<FormattedDate date={mockedTimeZone} />);
-    expect(wrapper.text()).toEqual(mockedFormattedDate);
+    expect(wrapper.text()).toEqual(`${mockHours}:${mockMinutes}`);
   });
 });

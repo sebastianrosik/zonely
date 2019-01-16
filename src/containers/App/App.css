@@ -6,41 +6,39 @@ body {
 
 html {
   font-size: 2em;
-  background: #111;
+  background: #181818;
   color: #fff;
   font-family: 'Overpass Mono', monospace;
 }
 
-.app {
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.content {
-  display: flex;
-  flex-direction: column;
-  max-width: 1000px;
+.header,
+.footer {
+  height: 85px;
+  padding: 20px;
+  box-sizing: border-box;
 }
 
 .list {
-  flex-grow: 1;
-  width: 100%;
   overflow: auto;
-  max-height: calc(100vh - 100px);
+  padding: 0;
+  max-height: calc(100vh - 170px);
 }
 
-.select {
-  flex-grow: 0;
-  flex-shrink: 0;
-  padding: 20px;
-  display: flex;
-  justify-content: center;
+.header {
+  color: #ec8600;
+  font-weight: 700;
 }
 
-.footer {
-  padding: 20px;
-  display: flex;
-  justify-content: center;
+@media (min-width: 640px) {
+  .app {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .footer {
+    padding: 20px 0;
+    text-align: right;
+  }
 }

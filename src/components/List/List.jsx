@@ -15,12 +15,12 @@ export default class List extends PureComponent {
       <li className={styles.item} key={item.name} data-test="item">
         <span className={styles.name}>{item.name}</span>
         <FormattedDate className={styles.date} date={item} />
-        <button
+        {/* <button
           className={styles.button}
           onClick={event => this.onRemove(event, item.name)}
         >
           Remove
-        </button>
+        </button> */}
       </li>
     );
   };

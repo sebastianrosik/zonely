@@ -6,10 +6,13 @@ import styles from './FormattedDate.css';
 export default class FormattedDate extends Component {
   render() {
     const { date } = this.props;
-    const formatedDate = date.format();
+    const hours = date.getHours();
+    const minutes = date.getMinutes();
     return (
       <span className={classnames(styles.date, this.props.className)}>
-        {formatedDate}
+        {hours}
+        <span className={styles.separator}>:</span>
+        {minutes}
       </span>
     );
   }
