@@ -1,9 +1,8 @@
 import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
-
 import styles from './Select.css';
-import { ADD_TIME_ZONE, SEARCH_TIME_ZONE } from '../../labels';
+import * as labels from '../../labels';
 
 export default class Select extends PureComponent {
   constructor(props) {
@@ -18,9 +17,6 @@ export default class Select extends PureComponent {
       name.toLowerCase().includes(this.state.filter.toLowerCase().trim())
     );
   }
-  onOverlayClick = () => {
-    this.props.onClose();
-  };
   onChange = event => {
     this.setState({
       filter: event.target.value
@@ -33,7 +29,6 @@ export default class Select extends PureComponent {
       filter: ''
     });
     this.props.onSelect(name);
-    this.props.onClose();
   };
   renderListItem = name => {
     return (
@@ -48,46 +43,43 @@ export default class Select extends PureComponent {
       </li>
     );
   };
-  render() {
-    if (!this.props.open) {
-      return null;
+  renderListItems() {
+    const listItems = this.getFilteredItems();
+    if (listItems.length === 0) {
+      return (
+        <div className={styles.message}>
+          {labels.noTimeZoneFound(this.state.filter)}
+        </div>
+      );
     }
+    return listItems.map(this.renderListItem);
+  }
+  render() {
     return (
-      <Fragment>
-        <div
-          data-test="overlay"
-          className={styles.overlay}
-          onClick={this.onOverlayClick}
-        />
+      <div className={classnames(styles.select, this.props.className)}>
         <form className={styles.form}>
           <input
             data-test="input"
             type="search"
-            placeholder={SEARCH_TIME_ZONE}
+            placeholder={labels.searchTimeZone()}
             onChange={this.onChange}
             className={styles.input}
             autoFocus
           />
         </form>
-        <ul className={styles.list}>
-          {this.getFilteredItems().map(this.renderListItem)}
-        </ul>
-      </Fragment>
+        <ul className={styles.list}>{this.renderListItems()}</ul>
+      </div>
     );
   }
 }
 
 Select.propTypes = {
-  open: PropTypes.bool,
   items: PropTypes.arrayOf(PropTypes.string),
   onSelect: PropTypes.func,
-  onClose: PropTypes.func,
   className: PropTypes.string
 };
 
 Select.defaultProps = {
-  open: false,
   items: [],
-  onSelect: () => {},
-  onClose: () => {}
+  onSelect: () => {}
 };

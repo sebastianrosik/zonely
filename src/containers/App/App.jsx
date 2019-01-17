@@ -10,7 +10,8 @@ import { openTimeZoneSelect, closeTimeZoneSelect } from '../../actions/ui';
 
 import styles from './App.css';
 import Button from '../../components/Button';
-import { ADD_TIME_ZONE } from '../../labels';
+import * as labels from '../../labels';
+import Modal from '../../components/Modal';
 
 const allTimeZones = TimeZone.getNames();
 const FULL_SECOND = 1000;
@@ -18,6 +19,7 @@ const FULL_SECOND = 1000;
 export class App extends Component {
   onSelectTimeZone = name => {
     this.props.addTimeZone(name);
+    this.props.closeTimeZoneSelect();
   };
   onAddTimeZone = () => {
     this.props.openTimeZoneSelect();
@@ -45,15 +47,19 @@ export class App extends Component {
             onRemove={this.onRemoveTimeZone}
           />
           <footer className={styles.footer}>
-            <Button label={ADD_TIME_ZONE} onClick={this.onAddTimeZone} />
+            <Button label={labels.addTimeZone()} onClick={this.onAddTimeZone} />
           </footer>
-          <Select
+          <Modal
             open={this.props.ui.isSelectOpen}
-            className={styles.select}
-            items={allTimeZones}
-            onSelect={this.onSelectTimeZone}
             onClose={this.onSelectClose}
-          />
+            title={labels.selectTimeZone()}
+          >
+            <Select
+              className={styles.select}
+              items={allTimeZones}
+              onSelect={this.onSelectTimeZone}
+            />
+          </Modal>
         </section>
       </div>
     );

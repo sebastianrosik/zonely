@@ -21,12 +21,18 @@ html {
 .list {
   overflow: auto;
   padding: 0;
-  max-height: calc(100vh - 170px);
+  height: calc(100vh - 170px);
 }
 
 .header {
   color: #ec8600;
   font-weight: 700;
+}
+
+.select {
+  position: absolute;
+  height: 100%;
+  width: 100%;
 }
 
 @media (min-width: 640px) {

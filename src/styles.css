@@ -1,0 +1,63 @@
+.typography {
+  font-family: 'Overpass Mono', monospace;
+}
+
+.input,
+.button {
+  composes: typography;
+  box-sizing: border-box;
+  font-size: 1rem;
+}
+
+.input {
+  border: 1px solid #c5c5c5;
+  border-radius: 3px;
+  padding: 10px 20px;
+}
+
+.button {
+  font-size: 0.5rem;
+  font-weight: 700;
+  border-radius: 2px;
+  text-transform: uppercase;
+  padding: 10px 20px;
+  border: 0;
+  box-sizing: border-box;
+  transition: background 0.2s ease-out, transform 0.05s ease-out;
+  cursor: pointer;
+}
+
+.button:hover {
+  transform: scale(1.02);
+}
+
+.button:active {
+  transform: scale(0.98);
+}
+
+.secondaryButton {
+  composes: button;
+  background: #e9e9e9;
+}
+
+.secondaryButton:hover {
+  background: #d8d8d8;
+}
+
+.secondaryButton:active {
+  background: #bebebe;
+}
+
+.primaryButton {
+  composes: button;
+  background: #ec8600;
+  color: #000;
+}
+
+.primaryButton:hover {
+  background: #ecad00;
+}
+
+.primaryButton:active {
+  background: #ffeb36;
+}
