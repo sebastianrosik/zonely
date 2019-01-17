@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import shortcutManager from '../../shortcutManager';
 
 import List from '../../components/List';
 import Select from '../../components/Select';
@@ -36,6 +38,9 @@ export class App extends Component {
   componentWillUnmount() {
     clearInterval(this.intervalToken);
   }
+  getChildContext() {
+    return { shortcuts: shortcutManager };
+  }
   render() {
     return (
       <div className={styles.app}>
@@ -57,6 +62,7 @@ export class App extends Component {
             <Select
               className={styles.select}
               items={allTimeZones}
+              onClose={this.onSelectClose}
               onSelect={this.onSelectTimeZone}
             />
           </Modal>
@@ -65,6 +71,10 @@ export class App extends Component {
     );
   }
 }
+
+App.childContextTypes = {
+  shortcuts: PropTypes.object.isRequired
+};
 
 const mapStateToProps = state => ({
   timeZones: state.timeZones,

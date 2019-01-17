@@ -37,6 +37,7 @@
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
     "react-redux": "^6.0.0",
+    "react-shortcuts": "^2.0.0",
     "redux": "^4.0.1",
     "redux-actions": "^2.6.4",
     "style-loader": "^0.23.1",

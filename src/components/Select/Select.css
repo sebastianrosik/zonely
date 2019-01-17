@@ -32,6 +32,10 @@
   padding-right: 20px;
 }
 
+.presSlectedButton {
+  background: #d8d8d8;
+}
+
 .button,
 .item {
   margin: 0;
