@@ -1,7 +1,8 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { ContextReplacementPlugin } = require('webpack');
 module.exports = {
-  devtool: "source-map",
+  devtool: 'source-map',
+  entry: ['@babel/polyfill', './src/index'],
   module: {
     rules: [
       {
@@ -23,14 +24,14 @@ module.exports = {
         test: /\.css$/,
         use: [
           {
-            loader: "style-loader"
+            loader: 'style-loader'
           },
           {
-            loader: "css-loader",
+            loader: 'css-loader',
             options: {
               sourceMap: true,
               modules: true,
-              localIdentName: "[local]___[hash:base64:5]"
+              localIdentName: '[local]___[hash:base64:5]'
             }
           }
         ]
