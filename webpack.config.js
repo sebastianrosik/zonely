@@ -1,5 +1,5 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-
+const { ContextReplacementPlugin } = require('webpack');
 module.exports = {
   devtool: "source-map",
   module: {
@@ -38,6 +38,7 @@ module.exports = {
     ]
   },
   plugins: [
+    new ContextReplacementPlugin(/moment[\/\\]locale$/, /en/),
     new HtmlWebpackPlugin({
       template: './src/index.html',
       filename: './index.html'

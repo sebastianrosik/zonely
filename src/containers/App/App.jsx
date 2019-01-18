@@ -77,6 +77,7 @@ export class App extends Component {
             <Button onClick={this.onAddTimeZone}>{labels.addTimeZone()}</Button>
           </footer>
           <Modal
+            className={styles.timeZoneSelectModal}
             open={this.props.ui.isSelectModalOpen}
             onClose={this.onSelectTimeZoneClose}
             title={labels.selectTimeZone()}
@@ -101,6 +102,7 @@ export class App extends Component {
               name={this.props.editedTimeZoneName}
               hours={this.props.editedTimeZoneHours}
               minutes={this.props.editedTimeZoneMinutes}
+              className={styles.timeZoneEditor}
             />
           </Modal>
         </section>

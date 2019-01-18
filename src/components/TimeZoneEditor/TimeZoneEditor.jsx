@@ -1,6 +1,8 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
+import classnames from 'classnames';
 import Button from '../Button';
+import styles from './TimeZOneEditor.css';
 
 export default class TimeZoneEditor extends Component {
   constructor(props) {
@@ -36,18 +38,24 @@ export default class TimeZoneEditor extends Component {
   render() {
     const { hours, minutes } = this.state;
     return (
-      <form onSubmit={this.onSubmit}>
-        <fieldset>
+      <form
+        onSubmit={this.onSubmit}
+        className={classnames(styles.form, this.props.className)}
+      >
+        <fieldset className={styles.fieldset}>
           <input
+            className={styles.input}
             value={hours}
             type="number"
             min="0"
             max="23"
             onChange={event => this.onChange(event, 'hours')}
             data-test="hours"
+            autoFocus
           />
-          :
+          <span className={styles.separator}>:</span>
           <input
+            className={styles.input}
             value={minutes}
             type="number"
             min="0"
@@ -70,6 +78,7 @@ export default class TimeZoneEditor extends Component {
 }
 
 TimeZoneEditor.propTypes = {
+  className: PropTypes.string,
   onCancel: PropTypes.func,
   onSubmit: PropTypes.func,
   hours: PropTypes.number,

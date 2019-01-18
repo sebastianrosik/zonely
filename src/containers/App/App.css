@@ -35,6 +35,15 @@ html {
   width: 100%;
 }
 
+.timeZoneEditor {
+  height: 100%;
+}
+
+.timeZoneSelectModal {
+  height: 70vh;
+  width: 70vw;
+}
+
 @media (min-width: 640px) {
   .app {
     min-height: 100vh;

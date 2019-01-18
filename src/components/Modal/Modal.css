@@ -1,5 +1,16 @@
-.overlay {
+.container {
   position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.overlay {
+  position: absolute;
   top: 0;
   bottom: 0;
   left: 0;
@@ -11,12 +22,9 @@
   border-radius: 2px;
   background: #fff;
   padding: 40px;
-  position: absolute;
-  top: 100px;
-  left: 100px;
-  bottom: 100px;
-  right: 100px;
   display: flex;
+  position: relative;
+  z-index: 1;
   flex-direction: column;
 }
 
