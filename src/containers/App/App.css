@@ -2,13 +2,23 @@ html,
 body {
   margin: 0;
   padding: 0;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
 }
 
 html {
   font-size: 2em;
-  background: #181818;
-  color: #fff;
+  color: #000;
   font-family: 'Overpass Mono', monospace;
+}
+
+.app {
+  overflow: hidden;
+  height: 100vh;
+  height: calc(var(--documentViewHeight, 1vh) * 100);
+  display: flex;
+  flex-direction: column;
 }
 
 .header,
@@ -21,7 +31,8 @@ html {
 .list {
   overflow: auto;
   padding: 0;
-  height: calc(100vh - 170px);
+  flex-grow: 1;
+  width: 100%;
 }
 
 .header {
@@ -39,14 +50,8 @@ html {
   height: 100%;
 }
 
-.timeZoneSelectModal {
-  height: 70vh;
-  width: 70vw;
-}
-
 @media (min-width: 640px) {
   .app {
-    min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -54,6 +59,14 @@ html {
 
   .footer {
     padding: 20px 0;
-    text-align: right;
+  }
+
+  .timeZoneSelectModal {
+    height: 70vh;
+    width: 70vw;
+  }
+
+  .list {
+    width: auto;
   }
 }

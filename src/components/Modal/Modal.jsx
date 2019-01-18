@@ -4,6 +4,7 @@ import { Shortcuts } from 'react-shortcuts';
 import classnames from 'classnames';
 import styles from './Modal.css';
 import IconButton from '../IconButton';
+import IconClose from '../Icon/IconClose.svg';
 
 export default class Modal extends PureComponent {
   shortcutsHandler = action => {
@@ -43,7 +44,7 @@ export default class Modal extends PureComponent {
               className={styles.button}
               onClick={this.props.onClose}
             >
-              x
+              <IconClose />
             </IconButton>
           </header>
           <div className={styles.content}>{this.props.children}</div>

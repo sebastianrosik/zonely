@@ -53,11 +53,24 @@ export class App extends Component {
     this.props.shiftWorldTime({ name, hours, minutes });
     this.props.closeTimeZoneEdit();
   };
+  onDocumentResize = () => {
+    this.setdocumentViewHeightCSSProperty();
+  };
+  setdocumentViewHeightCSSProperty() {
+    let vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty(
+      '--documentViewHeight',
+      `${vh}px`
+    );
+  }
   componentDidMount() {
     this.intervalToken = setInterval(this.props.updateClock, FULL_SECOND);
+    window.addEventListener('resize', this.onDocumentResize);
+    this.setdocumentViewHeightCSSProperty();
   }
   componentWillUnmount() {
     clearInterval(this.intervalToken);
+    window.removeEventListener('resize', this.onDocumentResize);
   }
   getChildContext() {
     return { shortcuts: shortcutManager };
@@ -65,47 +78,45 @@ export class App extends Component {
   render() {
     return (
       <div className={styles.app}>
-        <section className={styles.content}>
-          <header className={styles.header}>TIMELY</header>
-          <List
-            className={styles.list}
-            items={this.props.timeZones}
-            onRemove={this.onRemoveTimeZone}
-            onEdit={this.onEditTimeZoneOpen}
-          />
-          <footer className={styles.footer}>
-            <Button onClick={this.onAddTimeZone}>{labels.addTimeZone()}</Button>
-          </footer>
-          <Modal
-            className={styles.timeZoneSelectModal}
-            open={this.props.ui.isSelectModalOpen}
+        <header className={styles.header}>TIMELY</header>
+        <List
+          className={styles.list}
+          items={this.props.timeZones}
+          onRemove={this.onRemoveTimeZone}
+          onEdit={this.onEditTimeZoneOpen}
+        />
+        <footer className={styles.footer}>
+          <Button onClick={this.onAddTimeZone}>{labels.addTimeZone()}</Button>
+        </footer>
+        <Modal
+          className={styles.timeZoneSelectModal}
+          open={this.props.ui.isSelectModalOpen}
+          onClose={this.onSelectTimeZoneClose}
+          title={labels.selectTimeZone()}
+        >
+          <Select
+            className={styles.select}
+            items={allTimeZones}
             onClose={this.onSelectTimeZoneClose}
-            title={labels.selectTimeZone()}
-          >
-            <Select
-              className={styles.select}
-              items={allTimeZones}
-              onClose={this.onSelectTimeZoneClose}
-              onSelect={this.onSelectTimeZone}
-            />
-          </Modal>
-          <Modal
-            open={this.props.ui.isEditModalOpen}
-            onClose={this.onEditTimeZoneClose}
-            title={
-              this.props.ui.editedTimeZone && this.props.ui.editedTimeZone.name
-            }
-          >
-            <TimeZoneEditor
-              onCancel={this.onEditTimeZoneClose}
-              onSubmit={this.onEditTimeZoneSubmit}
-              name={this.props.editedTimeZoneName}
-              hours={this.props.editedTimeZoneHours}
-              minutes={this.props.editedTimeZoneMinutes}
-              className={styles.timeZoneEditor}
-            />
-          </Modal>
-        </section>
+            onSelect={this.onSelectTimeZone}
+          />
+        </Modal>
+        <Modal
+          open={this.props.ui.isEditModalOpen}
+          onClose={this.onEditTimeZoneClose}
+          title={
+            this.props.ui.editedTimeZone && this.props.ui.editedTimeZone.name
+          }
+        >
+          <TimeZoneEditor
+            onCancel={this.onEditTimeZoneClose}
+            onSubmit={this.onEditTimeZoneSubmit}
+            name={this.props.editedTimeZoneName}
+            hours={this.props.editedTimeZoneHours}
+            minutes={this.props.editedTimeZoneMinutes}
+            className={styles.timeZoneEditor}
+          />
+        </Modal>
       </div>
     );
   }

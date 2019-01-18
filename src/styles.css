@@ -27,6 +27,10 @@
   cursor: pointer;
 }
 
+.button + .button {
+  margin-left: 20px;
+}
+
 .button:hover {
   transform: scale(1.02);
 }

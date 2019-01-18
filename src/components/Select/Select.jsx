@@ -5,6 +5,8 @@ import { Shortcuts } from 'react-shortcuts';
 import styles from './Select.css';
 import * as labels from '../../labels';
 
+const KEY_DOWN = 40;
+const KEY_UP = 38;
 const EMPTY_VALUE = '';
 export default class Select extends PureComponent {
   constructor(props) {
@@ -54,7 +56,10 @@ export default class Select extends PureComponent {
     event.preventDefault();
     this.props.onSelect(this.state.value);
   };
-  shortcutsHandler = action => {
+  shortcutsHandler = (action, event) => {
+    if (event.keyCode === KEY_DOWN || event.keyCode === KEY_UP) {
+      event.preventDefault();
+    }
     const { value } = this.state;
     switch (action) {
       case 'PRE_SELECT_NEXT':

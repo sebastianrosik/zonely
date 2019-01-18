@@ -7,3 +7,5 @@ export const noTimeZoneFound = name => (
   </Fragment>
 );
 export const searchTimeZone = () => 'Search';
+export const hours = () => 'Hours';
+export const minutes = () => 'Minutes';

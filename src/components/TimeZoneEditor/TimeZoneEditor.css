@@ -1,19 +1,16 @@
-.form {
-  display: flex;
-  flex-direction: column;
-}
-
 .fieldset {
-  flex-grow: 1;
-  justify-content: center;
-  align-items: center;
-  display: flex;
   border: 0;
+  text-align: center;
+  padding: 0;
+  color: #000;
 }
 
 .footer {
   flex-grow: 0;
   flex-shrink: 0;
+  justify-content: flex-end;
+  display: flex;
+  margin-top: 20px;
 }
 
 .input {
@@ -26,4 +23,30 @@
   color: #000;
   display: inline-block;
   margin: 0 20px;
+}
+
+.label {
+  display: none;
+}
+
+@media (max-width: 370px) {
+  .fieldset {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+  }
+  .separator {
+    display: none;
+  }
+  .label {
+    display: block;
+    margin: 40px 0 20px 0;
+  }
+  .label:after {
+    content: ': ';
+    display: inline-block;
+  }
+  .footer {
+    margin-top: 60px;
+  }
 }

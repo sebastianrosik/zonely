@@ -1,8 +1,9 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import Button from '../Button';
 import styles from './TimeZOneEditor.css';
+import * as labels from '../../labels';
 
 export default class TimeZoneEditor extends Component {
   constructor(props) {
@@ -43,6 +44,9 @@ export default class TimeZoneEditor extends Component {
         className={classnames(styles.form, this.props.className)}
       >
         <fieldset className={styles.fieldset}>
+          <label className={styles.label} htmlFor="hours">
+            {labels.hours()}
+          </label>
           <input
             className={styles.input}
             value={hours}
@@ -51,9 +55,13 @@ export default class TimeZoneEditor extends Component {
             max="23"
             onChange={event => this.onChange(event, 'hours')}
             data-test="hours"
+            name="hours"
             autoFocus
           />
           <span className={styles.separator}>:</span>
+          <label className={styles.label} htmlFor="minutes">
+            {labels.minutes()}
+          </label>
           <input
             className={styles.input}
             value={minutes}
@@ -62,9 +70,10 @@ export default class TimeZoneEditor extends Component {
             max="59"
             onChange={event => this.onChange(event, 'minutes')}
             data-test="minutes"
+            name="minutes"
           />
         </fieldset>
-        <footer>
+        <footer className={styles.footer}>
           <Button type="submit" data-test="submit">
             Save
           </Button>
