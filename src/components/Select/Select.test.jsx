@@ -12,44 +12,23 @@ describe('Select', () => {
     expect.hasAssertions();
     wrapper = shallow(<Select items={fakeItems} />);
   });
-  it('does not render list when select is not open', () => {
-    expect(wrapper.find('li')).toHaveLength(0);
-  });
-  it('render list when select is open', () => {
-    wrapper.setProps({
-      open: true
-    });
+  it('render list with proper amount of given items', () => {
     const items = wrapper.find('[data-test="item"]');
     expect(items).toHaveLength(fakeItems.length);
     expect(items.at(0).text()).toEqual(EUROPE_WARSAW);
     expect(items.at(1).text()).toEqual(AMERICA_NEWYORK);
   });
-  it('calls onClose list after clicking on overlay', () => {
-    const onCloseMock = jest.fn();
+  it('calls onSelect list after selecting an item', () => {
+    const onSelectMock = jest.fn();
     wrapper.setProps({
       open: true,
-      onClose: onCloseMock
-    });
-    wrapper.find('[data-test="overlay"]').simulate('click', fakeEvent);
-    expect(onCloseMock).toHaveBeenCalled();
-  });
-  it('overlay is not rendered when select is closed', () => {
-    wrapper.setProps({
-      open: false
-    });
-    expect(wrapper.contains('[data-test="overlay"]')).toEqual(false);
-  });
-  it('calls onClose list after selecting an item', () => {
-    const onCloseMock = jest.fn();
-    wrapper.setProps({
-      open: true,
-      onClose: onCloseMock
+      onSelect: onSelectMock
     });
     wrapper
       .find('[data-test="button"]')
       .at(0)
       .simulate('click', fakeEvent);
-    expect(onCloseMock).toHaveBeenCalled();
+    expect(onSelectMock).toHaveBeenCalled();
   });
   it('filters list', () => {
     wrapper.setProps({
@@ -73,5 +52,25 @@ describe('Select', () => {
       }
     });
     expect(wrapper.state('filter')).toEqual(expectedFilter);
+  });
+  it('calls onClose when a CLOSE action is passed through shortcut manager', () => {
+    const onCloseMock = jest.fn();
+    wrapper.setProps({
+      onClose: onCloseMock
+    });
+    wrapper.instance().shortcutsHandler('CLOSE');
+    expect(onCloseMock).toHaveBeenCalled();
+  });
+  it('calls onSelect when a SELECT action is passed through shortcut manager', () => {
+    const onSelectMock = jest.fn();
+    const mockedValue = 'foobar';
+    wrapper.setProps({
+      onSelect: onSelectMock
+    });
+    wrapper.setState({
+      value: mockedValue
+    });
+    wrapper.instance().shortcutsHandler('SELECT');
+    expect(onSelectMock).toHaveBeenCalledWith(mockedValue);
   });
 });

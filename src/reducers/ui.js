@@ -1,19 +1,37 @@
 import { handleActions } from 'redux-actions';
-import { openTimeZoneSelect, closeTimeZoneSelect } from '../actions/ui';
+import {
+  openTimeZoneSelect,
+  closeTimeZoneSelect,
+  openTimeZoneEdit,
+  closeTimeZoneEdit
+} from '../actions/ui';
+import TimeZone from '../lib/TimeZone';
 
 const defaultState = {
-  isSelectOpen: false
+  isSelectModalOpen: false,
+  isEditModalOpen: false,
+  editedTimeZone: null
 };
 
 export default handleActions(
   {
     [openTimeZoneSelect]: state => ({
       ...state,
-      isSelectOpen: true
+      isSelectModalOpen: true
     }),
     [closeTimeZoneSelect]: state => ({
       ...state,
-      isSelectOpen: false
+      isSelectModalOpen: false
+    }),
+    [openTimeZoneEdit]: (state, { payload: name }) => ({
+      ...state,
+      isEditModalOpen: true,
+      editedTimeZone: new TimeZone(name)
+    }),
+    [closeTimeZoneEdit]: state => ({
+      ...state,
+      isEditModalOpen: false,
+      editedTimeZone: null
     })
   },
   defaultState

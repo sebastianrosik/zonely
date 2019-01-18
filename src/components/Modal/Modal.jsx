@@ -1,31 +1,47 @@
 import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
+import { Shortcuts } from 'react-shortcuts';
 
 import styles from './Modal.css';
 import IconButton from '../IconButton';
 
 export default class Modal extends PureComponent {
+  shortcutsHandler = action => {
+    switch (action) {
+      case 'CLOSE':
+        this.props.onClose();
+        return;
+      default:
+        return;
+    }
+  };
   render() {
     if (!this.props.open) {
       return null;
     }
     return (
-      <Fragment>
+      <Shortcuts name="Modal" handler={this.shortcutsHandler}>
         <div
           data-test="overlay"
           className={styles.overlay}
           onClick={this.props.onClose}
         />
-        <div className={styles.modal}>
+        <div className={styles.modal} data-test="modal">
           <header className={styles.header}>
-            <h3 className={styles.title}>{this.props.title}</h3>
-            <IconButton className={styles.button} onClick={this.props.onClose}>
+            <h3 className={styles.title} data-test="title">
+              {this.props.title}
+            </h3>
+            <IconButton
+              data-test="close"
+              className={styles.button}
+              onClick={this.props.onClose}
+            >
               x
             </IconButton>
           </header>
           <div className={styles.content}>{this.props.children}</div>
         </div>
-      </Fragment>
+      </Shortcuts>
     );
   }
 }

@@ -4,5 +4,8 @@ export default {
     PRE_SELECT_PREV: 'up',
     SELECT: 'enter',
     CLOSE: 'escape'
+  },
+  Modal: {
+    CLOSE: 'escape'
   }
 };

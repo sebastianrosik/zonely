@@ -6,62 +6,78 @@ import { updateClock } from '../actions/clock';
 
 jest.mock('../lib/TimeZone');
 
+const createInitialState = (list = []) => ({
+  offsetInMinutes: 0,
+  list: [...list]
+});
+
 describe('reducers/timeZones', () => {
   beforeEach(() => {
     expect.hasAssertions();
     TimeZone.mockClear();
   });
   it('Creates a new time zone', () => {
-    const initialState = [];
+    const initialState = createInitialState();
     const action = addTimeZone(EUROPE_WARSAW);
     const state = timeZonesReducer(initialState, action);
-    expect(state[0]).toBeInstanceOf(TimeZone);
-    expect(TimeZone).toHaveBeenCalledWith(EUROPE_WARSAW);
+    const expectedTimeOffsetInMinutes = 0;
+    expect(state.list[0]).toBeInstanceOf(TimeZone);
+    expect(TimeZone).toHaveBeenCalledWith(
+      EUROPE_WARSAW,
+      expectedTimeOffsetInMinutes
+    );
   });
   it('Does not create a new time zone if it already exist', () => {
-    const initialState = [
+    const initialState = createInitialState([
       {
         name: EUROPE_WARSAW
       }
-    ];
+    ]);
     const action = addTimeZone(EUROPE_WARSAW);
     const state = timeZonesReducer(initialState, action);
-    expect(state).toEqual([
+    expect(state.list).toEqual([
       {
         name: EUROPE_WARSAW
       }
     ]);
   });
   it('Removes given time zone', () => {
-    const initialState = [
+    const initialState = createInitialState([
       {
         name: EUROPE_WARSAW
       },
       {
         name: AMERICA_NEWYORK
       }
-    ];
+    ]);
     const action = removeTimeZone(EUROPE_WARSAW);
     const state = timeZonesReducer(initialState, action);
-    expect(state).toEqual([
+    expect(state.list).toEqual([
       {
         name: AMERICA_NEWYORK
       }
     ]);
   });
   it('reacreates time zone instances when clock is updated', () => {
-    const initialState = [
+    const initialState = createInitialState([
       {
         name: EUROPE_WARSAW
       },
       {
         name: AMERICA_NEWYORK
       }
-    ];
+    ]);
     const action = updateClock();
+    const expectedTimeOffsetInMinutes = 0;
     timeZonesReducer(initialState, action);
-    expect(TimeZone).toHaveBeenCalledTimes(initialState.length);
-    expect(TimeZone).toHaveBeenCalledWith(EUROPE_WARSAW);
-    expect(TimeZone).toHaveBeenCalledWith(AMERICA_NEWYORK);
+    expect(TimeZone).toHaveBeenCalledTimes(initialState.list.length);
+    expect(TimeZone).toHaveBeenCalledWith(
+      EUROPE_WARSAW,
+      expectedTimeOffsetInMinutes
+    );
+    expect(TimeZone).toHaveBeenCalledWith(
+      AMERICA_NEWYORK,
+      expectedTimeOffsetInMinutes
+    );
   });
 });

@@ -6,7 +6,14 @@ import store from './store';
 import { addTimeZone } from './actions/timeZones';
 import TimeZone from './lib/TimeZone';
 
-store.dispatch(addTimeZone(TimeZone.guessUsersTimeZone()));
+if (process.env.NODE_ENV !== 'production') {
+  const whyDidYouRender = require('@welldone-software/why-did-you-render');
+  whyDidYouRender(React);
+}
+
+const usersTimeZone = TimeZone.guessUsersTimeZone();
+
+store.dispatch(addTimeZone(usersTimeZone));
 store.dispatch(addTimeZone('Etc/GMT+0'));
 
 ReactDOM.render(

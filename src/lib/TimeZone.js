@@ -3,12 +3,15 @@ import moment from 'moment-timezone';
 export const DEFAULT_TIME_ZONE = 'Etc/GMT';
 
 export default class TimeZone {
-  constructor(name = DEFAULT_TIME_ZONE) {
+  constructor(name = DEFAULT_TIME_ZONE, offsetMinutes = 0) {
     if (!TimeZone.isValidName(name)) {
       throw new Error('Given time zone is invalid');
     }
     this.name = name;
-    this._moment = moment().tz(name);
+    this._moment = moment()
+      .tz(name)
+      .clone()
+      .add(offsetMinutes, 'minute');
   }
   static guessUsersTimeZone() {
     return moment.tz.guess();
@@ -19,16 +22,16 @@ export default class TimeZone {
   static isValidName(name) {
     return moment.tz.zone(name) !== null;
   }
-  static addLeadZero(number) {
-    return number < 10 ? `0${number}` : number.toString();
+  getHours(offsetInMinutes = 0) {
+    return this._moment
+      .clone()
+      .add(offsetInMinutes, 'minutes')
+      .hour();
   }
-  getHours() {
-    return TimeZone.addLeadZero(this._moment.hour());
-  }
-  getMinutes() {
-    return TimeZone.addLeadZero(this._moment.minute());
-  }
-  format() {
-    return this._moment.format('HH:mm:ss');
+  getMinutes(offsetInMinutes = 0) {
+    return this._moment
+      .clone()
+      .add(offsetInMinutes, 'minutes')
+      .minute();
   }
 }

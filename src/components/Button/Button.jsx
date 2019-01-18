@@ -8,21 +8,23 @@ export default class Button extends PureComponent {
   render() {
     return (
       <button
+        {...this.props}
         className={classnames(styles.button, this.props.className)}
         onClick={this.props.onClick}
       >
-        {this.props.label}
+        {this.props.children}
       </button>
     );
   }
 }
 
 Button.propTypes = {
-  label: PropTypes.string,
+  type: PropTypes.string,
   className: PropTypes.string,
   onClick: PropTypes.func
 };
 
 Button.defaultProps = {
-  onClick: () => {}
+  onClick: () => {},
+  type: 'button'
 };

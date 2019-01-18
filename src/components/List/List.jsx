@@ -10,17 +10,20 @@ export default class List extends PureComponent {
     event.preventDefault();
     this.props.onRemove(name);
   };
+  onEdit = (event, name) => {
+    event.preventDefault();
+    this.props.onEdit(name);
+  };
   renderListItem = item => {
     return (
-      <li className={styles.item} key={item.name} data-test="item">
+      <li
+        className={styles.item}
+        key={item.name}
+        data-test="item"
+        onClick={event => this.onEdit(event, item.name)}
+      >
         <span className={styles.name}>{item.name}</span>
         <FormattedDate className={styles.date} date={item} />
-        {/* <button
-          className={styles.button}
-          onClick={event => this.onRemove(event, item.name)}
-        >
-          Remove
-        </button> */}
       </li>
     );
   };
@@ -40,10 +43,12 @@ List.propTypes = {
     })
   ),
   onRemove: PropTypes.func,
+  onEdit: PropTypes.func,
   className: PropTypes.string
 };
 
 List.defaultProps = {
   items: [],
-  onRemove: () => {}
+  onRemove: () => {},
+  onEdit: () => {}
 };
