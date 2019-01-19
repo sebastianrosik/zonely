@@ -78,7 +78,7 @@ export class App extends Component {
   render() {
     return (
       <div className={styles.app}>
-        <header className={styles.header}>TIMELY</header>
+        <header className={styles.header}>ZONELY</header>
         <List
           className={styles.list}
           items={this.props.timeZones}
